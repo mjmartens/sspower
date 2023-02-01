@@ -2,7 +2,7 @@ Package: sspower
 Type: Package
 Title: Sample Size and Power Calculation for Regression Analysis
 Version: 0.1.0
-Author: Michael J. Martens <mmartens@mcw.edu>
+Author: Michael J. Martens
 Maintainer: Michael J. Martens <mmartens@mcw.edu>
 Description: Provides functions to compute sample size and power for studies that will be analyzed using generalized linear models and time-to-event regression models (Cox proportional hazards and Fine-Gray models). 
 License: GPL-3
