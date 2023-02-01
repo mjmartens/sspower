@@ -8,7 +8,7 @@
 #' @param R2 Coefficient of determination matrix of main variable(s) given other covariate(s)
 #' @param f00 Expected residual variance under null, E[Var(Y|X)|H0]
 #'
-#' @return Power to detect targeted effect sizes with specified sample size and type I error rate
+#' @return Power to detect targeted effect sizes given specified sample size and type I error rate
 #' @export
 #'
 #' @references Martens, M.J. and Logan, B.L. (2020). A Unified Approach to Sample Size and Power Determination for Testing Parameters in Generalized Linear and Time to Event Regression Models. \emph{Statistics in Medicine} \strong{40(5)}, 1121-1132.
@@ -21,8 +21,8 @@
 #' vz = diag(c(0.5,0.25))
 #' rsq = diag(c(0,0.5))
 #' f0 = 0.20
-#' powGLM(num,level,del,vz,rsq,f0)
-powGLM = function(n,alpha,delta,varZ,R2,f00) {
+#' powerGLM(num,level,del,vz,rsq,f0)
+powerGLM = function(n,alpha,delta,varZ,R2,f00) {
   p = length(delta)
   sdZ = chol(varZ)
   kappa = n*f00 * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2) %*% t(sdZ) %*% delta

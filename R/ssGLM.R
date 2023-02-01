@@ -8,7 +8,7 @@
 #' @param R2 Coefficient of determination matrix of main variable(s) given other covariate(s)
 #' @param f00 Expected residual variance under null, E[Var(Y|X)|H0]
 #'
-#' @return Required sample size to detect targeted effect sizes with specified type I error rate and power
+#' @return Required sample size to detect targeted effect sizes given specified type I error rate and power
 #' @export
 #'
 #' @references Martens, M.J. and Logan, B.L. (2020). A Unified Approach to Sample Size and Power Determination for Testing Parameters in Generalized Linear and Time to Event Regression Models. \emph{Statistics in Medicine} \strong{40(5)}, 1121-1132.

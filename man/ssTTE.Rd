@@ -22,7 +22,7 @@ ssTTE(alpha, power, delta, varZ, R2, sstype = "N", psi = NULL)
 \item{psi}{Event probability; required for patient-drive sample size (sstype = 'N')}
 }
 \value{
-Required sample size to detect targeted effect sizes with specified type I error rate and power
+Required sample size to detect targeted effect sizes given specified type I error rate and power
 }
 \description{
 Calculate the required sample size for testing effects of main variable(s) in unstratified time-to-event (Cox and Fine-Gray) regression models

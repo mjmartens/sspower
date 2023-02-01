@@ -20,7 +20,7 @@ ssGLM(alpha, power, delta, varZ, R2, f00)
 \item{f00}{Expected residual variance under null, E[Var(Y|X)|H0]}
 }
 \value{
-Required sample size to detect targeted effect sizes with specified type I error rate and power
+Required sample size to detect targeted effect sizes given specified type I error rate and power
 }
 \description{
 Calculate the required sample size for testing effects of main variable(s) in a generalized linear model (GLM)

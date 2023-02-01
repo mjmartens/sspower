@@ -7,7 +7,7 @@
 #' @param varZ Variance for main variable(s); should be a matrix if more than one variable
 #' @param R2 Coefficient of determination matrix of main variable(s) given other covariate(s)
 #' @param psi Event probability
-#' @return Power to detect targeted effect sizes with specified sample size and type I error rate
+#' @return Power to detect targeted effect sizes given specified sample size and type I error rate
 #' @export
 #'
 #' @references Martens, M.J. and Logan, B.L. (2020). A Unified Approach to Sample Size and Power Determination for Testing Parameters in Generalized Linear and Time to Event Regression Models. \emph{Statistics in Medicine} \strong{40(5)}, 1121-1132.
@@ -20,8 +20,8 @@
 #' vz = matrix(c(1,0.25,0.25,0.25),nrow=2)
 #' rsq = matrix(c(0.5,0.25,0.25,0),nrow=2)
 #' pr_event = 0.5
-#' powTTE(num,level,del,vz,rsq,pr_event)
-powTTE = function(n,alpha,delta,varZ,R2,psi) {
+#' powerTTE(num,level,del,vz,rsq,pr_event)
+powerTTE = function(n,alpha,delta,varZ,R2,psi) {
   p = length(delta)
   sdZ = chol(varZ)
   kappa = n*psi * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2) %*% t(sdZ) %*% delta
