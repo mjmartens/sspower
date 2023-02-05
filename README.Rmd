@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of sspower is to provide functions to compute sample size and power for studies that will be analyzed using generalized linear models and time-to-event regression models (Cox proportional hazards and Fine-Gray models). 
+The goal of sspower is to provide functions to compute sample size and power for studies that will be analyzed using generalized linear models and from time-to-event regression models, including the Cox proportional hazards and Fine-Gray models. 
 
 ## Installation
 
@@ -30,25 +30,21 @@ install.packages("sspower")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Suppose we want to estimate the sample size needed for a joint test of the effects of two main variable in a logistic regression model while adjusting for other covariates. The test will have a 5% significance level and 80% power. Log odds ratios targeted for the variables are 0.5 and 0.3. The main variables are assumed to be independent with variances 0.5 and 0.25. The coefficient of determination matrix (R2) is assumed to be diag(c(0.,0.5)). The expected residual variance E[Var(Y|X)] is specified as 0.2. 
+
+Sample size calculation proceeds as follows from the ssGLM function:
 
 ```{r example}
 library(sspower)
-## basic example code
+level = 0.05
+pow = 0.80
+del = c(0.5,0.3)
+vz = diag(c(0.5,0.25))
+rsq = diag(c(0,0.5))
+f0 = 0.20
+
+ssGLM(level,pow,del,vz,rsq,f0)
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+Approximately 354 patients in total are required for this study.

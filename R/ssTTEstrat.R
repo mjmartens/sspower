@@ -9,6 +9,19 @@
 #' @param psi Vector of event probabilities for strata
 #' @param rho Vector of strata probabilities
 #' @param sstype Type of sample size calculation ('N' = patients (default), 'Events' = # events)
+#' @details The sample size in terms of subjects is calculated according to the formula given for GLMs by Theorems 2-3 of Martens, Kim, and Ahn, of the form
+#' \deqn{n = \frac{\kappa(\alpha,\pi,p)}{\sum_{k=1}^K \rho_k \psi_k \boldsymbol{\delta}^T \boldsymbol{\Omega}_{kz} (\mathbf{I} - \mathbf{R}_k^{\otimes 2}) \boldsymbol{\Omega}_{kz}^T \boldsymbol{\delta}},}{n = \kappa(\alpha,\pi,p) / [\sum_{k=1}^K \rho_k \psi_k \delta^T \Omega_kz (I - R_k * R_k^T) \Omega_kz^T \delta],}
+#' where \eqn{\delta} is the set of targeted coefficient values for the main variables of interest (log hazard ratios for Cox model and log subdistribution hazard ratios for Fine-Gray model);
+#' \eqn{\psi}_k is the probability of a subject in stratum k having an event of interest that is not censored;
+#' \eqn{\rho}_k is the probability of being in stratum k;
+#' \eqn{\boldsymbol{\Omega}_{kz}} is the Cholesky root of \eqn{Var \mathbf{Z}}{Var Z} in stratum k;
+#' \eqn{\mathbf{R}_k^{\otimes 2}}{R_k R_k^T} is the coefficient of determination matrix of the main variables with other covariates in stratum k;
+#' \eqn{\kappa(\alpha,\pi,p)} is the noncentrality parameter for a\eqn{chi_p^2} distribution that solves
+#' \deqn{\pi = Prob(\chi_p^2(\kappa) > C_\alpha);}
+#' and \eqn{C_\alpha} is the \eqn{1-\alpha} quantile of a central \eqn{chi_p^2} distribution.
+#'
+#' For an event-driven calculation, the number of events required is calculated according to the formula given for GLMs by Theorem 1 of Martens, Kim, and Ahn, of the form
+#' \deqn{e = \frac{\kappa(\alpha,\pi,p) \sum_{k=1}^K \rho_k \psi_k}{\sum_{k=1}^K \rho_k \psi_k \boldsymbol{\delta}^T \boldsymbol{\Omega}_{kz} (\mathbf{I} - \mathbf{R}_k^{\otimes 2}) \boldsymbol{\Omega}_{kz}^T \boldsymbol{\delta}},}{n = \kappa(\alpha,\pi,p) \sum_{k=1}^K \rho_k \psi_k / [\sum_{k=1}^K \rho_k \psi_k \delta^T \Omega_kz (I - R_k * R_k^T) \Omega_kz^T \delta],}
 #' @return Required sample size to detect targeted effect sizes given specified type I error rate and power
 #' @export
 #'
