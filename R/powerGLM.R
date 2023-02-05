@@ -1,4 +1,5 @@
 #' @title Power Calculation for Generalized Linear Models
+#'
 #' @description Calculate the power level attained for testing effects of main variable(s) in a generalized linear model (GLM)
 #'
 #' @param n Number of subjects
@@ -8,11 +9,27 @@
 #' @param R2 Coefficient of determination matrix of main variable(s) given other covariate(s)
 #' @param f00 Expected residual variance under null, E[Var(Y|X)|H0]
 #'
+#' @details The GLM considered has the form
+#' \deqn{h\{E(Y|\mathbf{Z},\mathbf{X})\} = \beta_0 + \boldsymbol{\beta}^T \mathbf{Z} + \boldsymbol{\gamma}^T \mathbf{X},}{h\{E(Y|Z,X)\} = \beta_0 + \beta^T Z + \gamma^T X,}
+#' where h is the link function, \eqn{\mathbf{Z}}{Z} is the main variable(s) of interest, \eqn{\mathbf{X}}{X} is the other covariate(s), \eqn{\beta_0} is the intercept term, \eqn{\beta} is the set of coefficients for \eqn{\mathbf{Z}}{Z}, and \eqn{\gamma} is the set of coefficients for \eqn{\mathbf{X}}{X}.
+#'
+#' The power is calculated according to the formula given by Theorem 1 of Martens, Kim, and Ahn, of the form
+#' \deqn{power = Prob(\chi_p^2(\kappa) > C_\alpha),}
+#' where \deqn{\kappa = n f_{00} \boldsymbol{\delta}^T \boldsymbol{\Omega}_z (\mathbf{I} - \mathbf{R}^{\otimes 2}) \boldsymbol{\Omega}_z^T \boldsymbol{\delta},}{\kappa = n f_00 \delta^T \Omega_z (I - R * R^T) \Omega_z^T \delta,}
+#' \eqn{f_{00}}{f_00} is the residual variance \eqn{E[Var(Y|X)|H_0]} under the null hypothesis \eqn{H_0: \beta = 0},
+#' \eqn{\delta} is the set of targeted GLM coefficient values for \eqn{\mathbf{Z}}{Z},
+#' \eqn{\boldsymbol{\Omega}_z}{\Omega_z} is the Cholesky root of \eqn{Var \mathbf{Z}}{Var Z},
+#' \eqn{\mathbf{R}^{\otimes 2}}{R R^T} is the coefficient of determination matrix of \eqn{\mathbf{Z}}{Z} with \eqn{\mathbf{X}}{X},
+#' and \eqn{C_\alpha} is the \eqn{1-\alpha} quantile of a central \eqn{chi_p^2} distribution.
+#'
 #' @return Power to detect targeted effect sizes given specified sample size and type I error rate
+#'
 #' @export
 #'
+#' @references Nelder, J. A. and Wedderburn, R. W. (1972). Generalized linear models. \emph{Journal of the Royal Statistical Society: Series A (General)} \strong{135}, 370–384.
 #' @references Martens, M.J. and Logan, B.L. (2020). A Unified Approach to Sample Size and Power Determination for Testing Parameters in Generalized Linear and Time to Event Regression Models. \emph{Statistics in Medicine} \strong{40(5)}, 1121-1132.
 #' @references Martens, M.J., Kim, S., and Ahn, K.W. (2023+). Sample Size & Power Determination for Evaluating Multiple Parameters in Nonlinear Regression Models with Potential Stratification. \emph{Biometrics}, draft under review.
+#'
 #' @examples
 #' ## Example of calculating power attained by 400 subjects for a 5\% significance level test
 #' num = 400

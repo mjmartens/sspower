@@ -30,19 +30,26 @@ Required sample size to detect targeted effect sizes given specified type I erro
 Calculate the required sample size for testing effects of main variable(s) in stratified time-to-event (Cox and Fine-Gray) regression models
 }
 \details{
+The stratified Cox and Fine-Gray models considered have the form
+\deqn{\lambda_k(t|\mathbf{Z},\mathbf{X}) = \lambda_{k0}(t) \exp(\boldsymbol{\beta}^T \mathbf{Z} + \boldsymbol{\gamma}^T \mathbf{X}),}{\lambda_k(t|Z,X) = \lambda_k0(t) \exp(\beta^T Z + \gamma^T X),}
+where \eqn{\lambda_k} is the hazard function of stratum k for the Cox model and subdistribution hazard function for the Fine-Gray model,
+\eqn{\lambda_{k0}}{\lambda_k0} is the baseline hazard/subdistribution hazard function for stratum k,
+\eqn{\mathbf{Z}}{Z} is the main variable(s) of interest, \eqn{\mathbf{X}}{X} is the other covariate(s), \eqn{\beta} is the set of coefficients for \eqn{\mathbf{Z}}{Z}, and \eqn{\gamma} is the set of coefficients for \eqn{\mathbf{X}}{X}.
+
 The sample size in terms of subjects is calculated according to the formula given for GLMs by Theorems 2-3 of Martens, Kim, and Ahn, of the form
 \deqn{n = \frac{\kappa(\alpha,\pi,p)}{\sum_{k=1}^K \rho_k \psi_k \boldsymbol{\delta}^T \boldsymbol{\Omega}_{kz} (\mathbf{I} - \mathbf{R}_k^{\otimes 2}) \boldsymbol{\Omega}_{kz}^T \boldsymbol{\delta}},}{n = \kappa(\alpha,\pi,p) / [\sum_{k=1}^K \rho_k \psi_k \delta^T \Omega_kz (I - R_k * R_k^T) \Omega_kz^T \delta],}
-where \eqn{\delta} is the set of targeted coefficient values for the main variables of interest (log hazard ratios for Cox model and log subdistribution hazard ratios for Fine-Gray model);
-\eqn{\psi}_k is the probability of a subject in stratum k having an event of interest that is not censored;
-\eqn{\rho}_k is the probability of being in stratum k;
-\eqn{\boldsymbol{\Omega}_{kz}} is the Cholesky root of \eqn{Var \mathbf{Z}}{Var Z} in stratum k;
-\eqn{\mathbf{R}_k^{\otimes 2}}{R_k R_k^T} is the coefficient of determination matrix of the main variables with other covariates in stratum k;
-\eqn{\kappa(\alpha,\pi,p)} is the noncentrality parameter for a\eqn{chi_p^2} distribution that solves
-\deqn{\pi = Prob(\chi_p^2(\kappa) > C_\alpha);}
+where \eqn{\pi} is the power for the test,
+\eqn{\rho}_k is the probability of a subject being in stratum k,
+\eqn{\psi}_k is the probability of a subject in stratum k having an event of interest that is not censored,
+\eqn{\delta} is the set of targeted coefficient values for \eqn{\mathbf{Z}}{Z},
+\eqn{\boldsymbol{\Omega}_{kz}}{\Omega_kz} is the Cholesky root of \eqn{Var \mathbf{Z}}{Var Z} in stratum k,
+\eqn{\mathbf{R}_k^{\otimes 2}}{R_k R_k^T} is the coefficient of determination matrix of \eqn{\mathbf{Z}}{Z} with \eqn{\mathbf{X}}{X} in stratum k,
+\eqn{\kappa(\alpha,\pi,p)} is the noncentrality parameter for a \eqn{chi_p^2} distribution that solves
+\deqn{\pi = Prob(\chi_p^2(\kappa) > C_\alpha),}
 and \eqn{C_\alpha} is the \eqn{1-\alpha} quantile of a central \eqn{chi_p^2} distribution.
 
 For an event-driven calculation, the number of events required is calculated according to the formula given for GLMs by Theorem 1 of Martens, Kim, and Ahn, of the form
-\deqn{e = \frac{\kappa(\alpha,\pi,p) \sum_{k=1}^K \rho_k \psi_k}{\sum_{k=1}^K \rho_k \psi_k \boldsymbol{\delta}^T \boldsymbol{\Omega}_{kz} (\mathbf{I} - \mathbf{R}_k^{\otimes 2}) \boldsymbol{\Omega}_{kz}^T \boldsymbol{\delta}},}{n = \kappa(\alpha,\pi,p) \sum_{k=1}^K \rho_k \psi_k / [\sum_{k=1}^K \rho_k \psi_k \delta^T \Omega_kz (I - R_k * R_k^T) \Omega_kz^T \delta],}
+\deqn{e = \frac{\kappa(\alpha,\pi,p) \sum_{k=1}^K \rho_k \psi_k}{\sum_{k=1}^K \rho_k \psi_k \boldsymbol{\delta}^T \boldsymbol{\Omega}_{kz} (\mathbf{I} - \mathbf{R}_k^{\otimes 2}) \boldsymbol{\Omega}_{kz}^T \boldsymbol{\delta}},}{n = \kappa(\alpha,\pi,p) \sum _k=1^K \rho_k \psi_k / [\sum _k=1^K \rho_k \psi_k \delta^T \Omega_kz (I - R_k * R_k^T) \Omega_kz^T \delta],}
 }
 \examples{
 ## Example of calculating sample size to attain 80\\% power for a 5\\% significance level test
@@ -61,6 +68,10 @@ ssTTEstrat(level,pow,del,vz,rsq,pr_event,pr_strat,"Events")  # Event driven SS c
 ssTTEstrat(level,pow,del,vz,rsq,pr_event,pr_strat,"N")       # Patient driven SS calculation
 }
 \references{
+Kalbfleisch, J. D. and Prentice, R. L. (1980). The Statistical Analysis of Failure Time Data. \emph{John Wiley & Sons}.
+
+Zhou, B., Latouche, A., Rocha, V., and Fine, J. (2011). Competing risks regression for stratified data. \emph{Biometrics} \strong{67}, 661–670.
+
 Martens, M.J. and Logan, B.L. (2020). A Unified Approach to Sample Size and Power Determination for Testing Parameters in Generalized Linear and Time to Event Regression Models. \emph{Statistics in Medicine} \strong{40(5)}, 1121-1132.
 
 Martens, M.J., Kim, S., and Ahn, K.W. (2023+). Sample Size & Power Determination for Evaluating Multiple Parameters in Nonlinear Regression Models with Potential Stratification. \emph{Biometrics}, draft under review.
