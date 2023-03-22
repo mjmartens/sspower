@@ -65,9 +65,14 @@ ssTTEstrat = function(alpha,power,delta,varZ,R2,psi,rho,sstype='N') {
     numer = uniroot(function(x) pchisq(qchisq(1-alpha,p),p,ncp=x,lower.tail=FALSE)-power,c(0,10^6))$root
     numer = numer*sum(rho*psi)^(tolower(sstype)=='events')
     denom = 0
+    if(p==1) {
+      denom = sum(rho * psi * varZ * delta^2 * (1 - R2))
+    }
+    else {
     for(k in 1:dim(varZ)[3]){
-      sdZ = chol(varZ[,,k])
-      denom = denom + psi[k] * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2[,,k]) %*% t(sdZ) %*% delta
+      sdZ = t(chol(varZ[,,k]))
+      denom = denom + rho[k] * psi[k] * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2[,,k]) %*% t(sdZ) %*% delta
+    }
     }
     return(as.numeric(numer/denom))
   }

@@ -8,7 +8,7 @@
 #' @param varZ Variance for main variable(s); should be a matrix if more than one variable
 #' @param R2 Coefficient of determination matrix of main variable(s) given other covariate(s)
 #' @param sstype Type of sample size calculation ('N' = patients (default), 'Events' = # events)
-#' @param psi Event probability; required for patient-drive sample size (sstype = 'N')
+#' @param psi Event probability; required only for patient-drive sample size (sstype = 'N')
 #'
 #' @details The Cox and Fine-Gray models considered have the form
 #' \deqn{\lambda(t|\mathbf{Z},\mathbf{X}) = \lambda_0(t) \exp(\boldsymbol{\beta}^T \mathbf{Z} + \boldsymbol{\gamma}^T \mathbf{X}),}{\lambda(t|Z,X) = \lambda_0(t) \exp(\beta^T Z + \gamma^T X),}
@@ -58,7 +58,7 @@ ssTTE = function(alpha,power,delta,varZ,R2,sstype='N',psi=NULL) {
   }
   else {
     p = length(delta)
-    sdZ = chol(varZ)
+    sdZ = t(chol(varZ))
     numer = uniroot(function(x) pchisq(qchisq(1-alpha,p),p,ncp=x,lower.tail=FALSE)-power,c(0,10^6))$root
     psi = ifelse(tolower(sstype)=='n',psi,1)
     denom = psi*t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2) %*% t(sdZ) %*% delta

@@ -19,7 +19,7 @@ ssTTE(alpha, power, delta, varZ, R2, sstype = "N", psi = NULL)
 
 \item{sstype}{Type of sample size calculation ('N' = patients (default), 'Events' = # events)}
 
-\item{psi}{Event probability; required for patient-drive sample size (sstype = 'N')}
+\item{psi}{Event probability; required only for patient-drive sample size (sstype = 'N')}
 }
 \value{
 Required sample size to detect targeted effect sizes given specified type I error rate and power

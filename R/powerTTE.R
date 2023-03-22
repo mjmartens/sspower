@@ -44,7 +44,7 @@
 #' powerTTE(num,level,del,vz,rsq,pr_event)
 powerTTE = function(n,alpha,delta,varZ,R2,psi) {
   p = length(delta)
-  sdZ = chol(varZ)
+  sdZ = t(chol(varZ))
   kappa = n*psi * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2) %*% t(sdZ) %*% delta
   val = pchisq(qchisq(1-alpha,p),p,ncp=kappa,lower.tail=FALSE)
   return(val)

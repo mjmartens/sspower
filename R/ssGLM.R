@@ -43,7 +43,7 @@
 #' ssGLM(level,pow,del,vz,rsq,f0)
 ssGLM = function(alpha,power,delta,varZ,R2,f00) {
   p = length(delta)
-  sdZ = chol(varZ)
+  sdZ = t(chol(varZ))
   numer = uniroot(function(x) pchisq(qchisq(1-alpha,p),p,ncp=x,lower.tail=FALSE)-power,c(0,10^6))$root
   denom = f00 * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2) %*% t(sdZ) %*% delta
   return(as.numeric(numer/denom))

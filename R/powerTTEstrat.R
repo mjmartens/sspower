@@ -50,9 +50,14 @@
 powerTTEstrat = function(n,alpha,delta,varZ,R2,psi,rho) {
   p = length(delta)
   kappa = 0
+  if(p==1) {
+    kappa = sum(rho * psi * varZ * delta^2 * (1 - R2))
+  }
+  else {
   for(k in 1:dim(varZ)[3]){
-    sdZ = chol(varZ[,,k])
-    kappa = kappa + psi[k] * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2[,,k]) %*% t(sdZ) %*% delta
+    sdZ = t(chol(varZ[,,k]))
+    kappa = kappa + rho[k] * psi[k] * t(delta) %*% sdZ %*% (diag(rep(1,p)) - R2[,,k]) %*% t(sdZ) %*% delta
+  }
   }
   kappa = n*kappa
   val = pchisq(qchisq(1-alpha,p),p,ncp=kappa,lower.tail=FALSE)

@@ -13,11 +13,13 @@ hazards and Fine-Gray models.
 
 ## Installation
 
-You can install the released version of sspower from
-[CRAN](https://CRAN.R-project.org) with:
+The current version of sspower is available in this repository. If you
+have the R package “devtools” installed, sspower can be installed
+directly from GitHub with:
 
 ``` r
-install.packages("sspower")
+require(devtools)
+install_github("mjmartens/sspower")
 ```
 
 ## Example
